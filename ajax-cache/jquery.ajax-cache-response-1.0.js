@@ -1,8 +1,13 @@
 /**
- * jQuery ajax cache response v1.0
+ * jQuery Ajax Cache Response v1.0
+ *  
+ * Copyright (c) 2010 Adam Ayres 
  * 
- * Author: Adam Ayres 
- * Requires: jquery.ajax-cache-response-1.0.js
+ * Licensed under the MIT license:
+ * 		http://www.opensource.org/licenses/mit-license.php
+ * 
+ * Project home:
+ * 		http://github.com/adamayres/jqueryplugins/tree/master/ajax-cache
  */
 
 ;(function($) {
@@ -20,8 +25,8 @@ $.ajaxCacheReponse = function() {
 			cacheId += $LITH.param(ajaxOptions.data, ajaxOptions.traditional);
 		}
 		
-    	cacheId += ((typeof ajaxOptions.dataType == "string") ? ajaxOptions.dataType : "");
-    	cacheId += ((typeof ajaxOptions.type == "string") ? ajaxOptions.type : "");
+    	cacheId += ((typeof ajaxOptions.dataType === "string") ? ajaxOptions.dataType : "");
+    	cacheId += ((typeof ajaxOptions.type === "string") ? ajaxOptions.type : "");
     	return cacheId;
 	}
 	
@@ -41,24 +46,24 @@ $.ajaxCacheReponse = function() {
 	}
 }();
 
-//$.ajax = $.wrap($.ajax, function(proceed, settings) {
-//	if (settings.cacheRequest) {
-//		var cachedResponse = $.ajaxCacheReponse.get(settings);
-//		if (cachedResponse !== null) {
-//			settings.success(cachedResponse);
-//			settings.complete(cachedResponse);
-//			return cachedResponse;
-//		}
-//	}
-//	
-//	var originalSuccess = settings.success;
-//	var newSuccess = function(data, textStatus, XMLHttpRequest) {		
-//		$.ajaxCacheReponse.set(settings, data);		
-//		originalSuccess(data, textStatus, XMLHttpRequest);		
-//	}
-//	
-//	settings.success = newSuccess;
-//	return proceed(settings);	
-//});	
+$.ajax = $.wrap($.ajax, function(proceed, settings) {
+	if (settings.cacheRequest) {
+		var cachedResponse = $.ajaxCacheReponse.get(settings);
+		if (cachedResponse !== null) {
+			settings.success(cachedResponse);
+			settings.complete(cachedResponse);
+			return cachedResponse;
+		}
+	}
+	
+	var originalSuccess = settings.success;
+	var newSuccess = function(data, textStatus, XMLHttpRequest) {		
+		$.ajaxCacheReponse.set(settings, data);		
+		originalSuccess(data, textStatus, XMLHttpRequest);		
+	}
+	
+	settings.success = newSuccess;
+	return proceed(settings);	
+});	
 
 })(jQuery);
