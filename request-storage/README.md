@@ -1,0 +1,1 @@
+Provides a per request storage in memory.  Implements the HTML5 web storage interface. See (http://dev.w3.org/html5/webstorage/).
