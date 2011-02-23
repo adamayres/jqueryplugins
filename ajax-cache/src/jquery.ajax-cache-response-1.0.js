@@ -1,7 +1,7 @@
 /**
  * jQuery Ajax Cache Response v1.0
  *  
- * Copyright (c) 2010 Adam Ayres 
+ * Copyright (c) 2011, Adam Ayres 
  * 
  * Licensed under the MIT license:
  * 		http://www.opensource.org/licenses/mit-license.php

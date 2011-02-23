@@ -1,10 +1,14 @@
+/** 
+ * Copyright (c) 2011, Adam Ayres 
+ * 
+ * Licensed under the MIT license:
+ * 		http://www.opensource.org/licenses/mit-license.php
+ */
+ 
 var logger = function() {
-	var logArea = $("#log");
-	var responseArea = $("#response");
-	var storageArea = $("#storage");
-	logArea.val("");
-	responseArea.val("");
-	storageArea.val("");
+	var logArea;
+	var responseArea;
+	var storageArea;
 	
 	return {
 		init: function(logSelector, responseSelector, storageSelector) {

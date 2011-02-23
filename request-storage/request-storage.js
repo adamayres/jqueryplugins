@@ -10,9 +10,33 @@
  * 		http://github.com/adamayres/jqueryplugins/tree/master/request-storage
  * 
  * Overview:
+ * 		Provides a per request storage in memory.  Implements the HTML5 web storage interface.
+ * 		See http://dev.w3.org/html5/webstorage/
  * 
  * Usage:
- *
+ * 		Add item to storage:
+ * 
+ * 			requestStorage.setItem("keyName", "value");
+ * 
+ * 		Get item from storage:
+ * 
+ * 			requestStorage.getItem("keyName");
+ * 
+ * 		Remove item from storage:
+ * 
+ * 			requestStorage.removeItem("keyName");
+ * 
+ * 		Clear all items from storage:
+ * 
+ * 			requestStorage.clear();
+ * 
+ * 		Get storage size:
+ * 
+ * 			requestStorage.length();
+ * 
+ * 		Get key from storage based on position:
+ * 
+ * 			requestStorage.key(1);
  */
 
 var requestStorage = function() {
