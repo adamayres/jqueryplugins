@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ajax Cache Response Demo</title>
+		<link type="text/css" rel="stylesheet" href="example-styles.css"></link>
+	</head>
+	<body>
+		<h6>Ajax Test Links:</h6>
+		<ul>
+			<li><a href="ajax-response.json" id="link1">Ajax Link 1</a><em> (JSON, 5000ms timer)</em></li>
+			<li><a href="ajax-response.xml" id="link2">Ajax Link 2</a><em> (XML, no timer)</em></li>
+			<li><a href="ajax-response.json" id="link3">Ajax Link 3</a><em> (JSON, custom callback - invalidate cache after 2 clicks)</em></li>
+		</ul>
+		<div class="log-container">
+			<h6>Ajax Response Log:</h6>
+			<textarea id="log"></textarea>
+		</div>
+		<div class="response-container">
+			<h6>Ajax responseText:</h6>
+			<textarea id="response"></textarea>
+		</div>
+		<div class="storage-container">
+			<h6>Storage:</h6>
+			<textarea id="storage"></textarea>
+		</div>
+		
+		<script type="text/javascript" src="../../includes/jquery-1.5.0.js"></script>
+		<script type="text/javascript" src="../jquery.ajax-cache-response.min.js"></script>
+		<script type="text/javascript" src="example-script.js"></script>
+		<script type="text/javascript">
+			/*
+			 * Set cacheResponse to be used by default
+			 */
+			$.ajaxSetup({
+				cacheResponse:true
+			});
+			 
+			/*
+			 * Example 1
+			 */
+			$("#link1").click(function() {
+				$.ajax({
+					url: $(this).attr("href"),
+					cacheResponseTimer: 5000
+				});
+				return false;
+			});
+		
+			/*
+			 * Example 2
+			 */
+			$("#link2").click(function() {
+				$.get($(this).attr("href"));
+				return false;
+			});
+			
+			/*
+			 * Example 3
+			 */
+			var clickCounter = 0;
+			$("#link3").click(function() {
+				clickCounter++;
+				$.ajax({
+					url: $(this).attr("href"),
+					cacheResponseValid: function() {
+						if (clickCounter <= 3) {
+							return true;
+						} else {
+							clickCounter = 1;
+							return false;
+						}
+					}
+				});
+				return false;
+			});
+			
+			/*
+			 * Logging methods
+			 */
+			logger.init("#log", "#response", "#storage");
+			
+			$(document).ajaxComplete(function(obj, xhr, options) {
+				logger.log(xhr, options.cacheResponseTimer);
+				logger.showStorage();
+			});
+		</script>
+	</body>
+</html>
+
