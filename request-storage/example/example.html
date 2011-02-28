@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Request Storage Demo</title>
+		<link type="text/css" rel="stylesheet" href="example-styles.css"></link>
+	</head>
+	<body>
+		<form id="set-form">
+			<fieldset>
+				<legend>Set Item</legend>
+				<label for="set-key">Key:</label><input type="text" name="set-key" id="set-key"></input>
+				<label for="set-value">Value:</label><input type="text" id="set-value"></input>
+				<input type="Submit" id="set-submit"></input>
+			</fieldset>
+		</form>
+		<form id="remove-form">
+			<fieldset>
+				<legend>Remove Item</legend>
+				<label for="remove-key">Key:</label><input type="text" name="remove-key" id="remove-key"></input>
+				<input type="Submit" id="remove-submit"></input>
+			</fieldset>
+		</form>
+		<form id="get-form">
+			<fieldset>
+				<legend>Get Item</legend>
+				<label for="get-key">Key:</label><input type="text" name="get-key" id="get-key"></input>
+				<input type="Submit" id="get-submit"></input>
+			</fieldset>
+		</form>
+		<div class="log-container">
+			<h6>Log:</h6>
+			<textarea id="log"></textarea>
+		</div>
+		<div class="storage-container">
+			<h6>Storage:</h6>
+			<textarea id="storage"></textarea>
+		</div>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+		<script type="text/javascript" src="../request-storage.js"></script>
+		<script type="text/javascript" src="example-script.js"></script>
+		<script type="text/javascript"> 
+			/*
+			 * Set Item
+			 */
+			$("#set-form").submit(function() {
+				requestStorage.setItem($("#set-key").val(), $("#set-value").val());
+				logger.log("Set", requestStorage);
+				logger.showStorage(requestStorage);
+				return false;
+			});
+			
+			/*
+			 * Remove Item
+			 */
+			$("#remove-form").submit(function() {
+				requestStorage.removeItem($("#remove-key").val());
+				logger.log("Remove", requestStorage);
+				logger.showStorage(requestStorage);
+				return false;
+			});
+			
+			/*
+			 * Remove Item
+			 */
+			$("#get-form").submit(function() {
+				var key = $("#get-key").val();
+				logger.log("Get", requestStorage, {
+					key: key,
+					value: requestStorage.getItem($("#get-key").val())
+				});
+				logger.showStorage(requestStorage);
+				return false;
+			});
+		
+			/*
+			 * Logging methods
+			 */
+			logger.init("#log", "#storage");
+		</script>
+	</body>
+</html>
