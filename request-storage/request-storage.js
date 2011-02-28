@@ -53,14 +53,14 @@ var requestStorage = function() {
 		},
 		setItem: function(key, value) {
 			if (!data.hasOwnProperty(key)) {		
-				this["length"]++;
+				this.length++;
 				dataKeyMap.push(key);
 			} 
 			data[key] = value;
 		},
 		removeItem: function(key) {
 			if (data.hasOwnProperty(key)) {
-				this["length"]--;
+				this.length--;
 				for (var i = 0; i < dataKeyMap.length; i++) {
 					if (dataKeyMap[i] == key) {
 						dataKeyMap.splice(i, 1);
