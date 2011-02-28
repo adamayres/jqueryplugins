@@ -4,65 +4,65 @@
  * Copyright (c) 2011, Adam Ayres 
  * 
  * Licensed under the MIT license:
- * 		http://www.opensource.org/licenses/mit-license.php
+ *    http://www.opensource.org/licenses/mit-license.php
  * 
  * Project home:
- * 		http://github.com/adamayres/jqueryplugins/tree/master/ajax-cache
+ *   http://github.com/adamayres/jqueryplugins/tree/master/ajax-cache-response
  * 
  * Requires: 
- * 		jquery.js version 1.5
- * 			http://code.jquery.com/jquery-1.5.min.js
- * 		jquery.request-storage-1.0.js
- * 			http://github.com/adamayres/jqueryplugins/tree/master/request-storage
+ *   jquery.js version 1.5
+ *      http://code.jquery.com/jquery-1.5.min.js
+ *   jquery.request-storage-1.0.js
+ *      http://github.com/adamayres/jqueryplugins/tree/master/request-storage
  * 
  * Overview:
- * 		The Ajax Cache Response plugin caches the response of 
- * 		Ajax requests.  Subsequent Ajax requests that match the original
- * 		Ajax options will return the cached response instead of making a 
- * 		new call.  Cached responses can be stored in a HTML5 web storage 
- * 		allowing them to persist across a session.
+ *   The Ajax Cache Response plugin caches the response of 
+ *   Ajax requests.  Subsequent Ajax requests that match the original
+ *   Ajax options will return the cached response instead of making a 
+ *   new call.  Cached responses can be stored in a HTML5 web storage 
+ *   allowing them to persist across a session.
  * 
  * Usage:
- * 		The Ajax Cache Response plugin wraps the main jQuery.ajax(...) method.
- * 		Usage of the plugin is done by adding a "cacheResponse" property to
- * 		the jQuery Ajax options obejct and setting it to true.
+ *   The Ajax Cache Response plugin wraps the main jQuery.ajax(...) method.
+ *   Usage of the plugin is done by adding a "cacheResponse" property to
+ *   the jQuery Ajax options obejct and setting it to true.
+ *
+ *   jQuery.ajax("/my-ajax-url", {
+ *      cacheResponse: true
+ *   });
+ *
+ *   An optional timer, in ms, can be set to control when the cache is invalidated.  The 
+ *   timer will start after a successful Ajax request.
+ *
+ *   jQuery.ajax({
+ *      cacheResponseTimer: 50000 
+ *   });
  * 
- * 		jQuery.ajax("/my-ajax-url", {
- *			cacheResponse: true
- * 		});
+ *   A optional function can be provided to invalidate the cache.  A return value
+ *   of false will invalidate the cache.
+ *
+ *   jQuery.ajax({
+ *      cacheResponseValid: function() { ... }
+ *   });
  * 
- * 		An optional timer, in ms, can be set to control when the cache is invalidated.  The 
- * 		timer will start after a successful Ajax request.
+ *   The storage for the cache respone is configurable.  By default the
+ *   cache is request scoped.  Alternative storage options, that implement
+ *   the HTML5 storage interface, can be used.
  * 
- * 		jQuery.ajax({
- * 			cacheResponseTimer: 50000 
- * 		});
+ *	 $.ajaxCacheResponse.storage = window.sessionStorage;
  * 
- * 		A optional function can be provided to invalidate the cache.  A return value
- * 		of false will invalidate the cache.
- * 
- * 		jQuery.ajax({
- * 			cacheResponseValid: function() { ... }
- * 		});
- * 
- * 		The storage for the cache respone is configurable.  By default the
- * 		cache is request scoped.  Alternative storage options, that implement
- * 		the HTML5 storage interface, can be used.
- * 
- *		$.ajaxCacheResponse.storage = window.sessionStorage;
- * 
- * 		In order for the jQuery.get(...) and jQuery.post(...) methods to
- * 		use the Ajax cached response the default Ajax options need to be changed
- * 		to set the "cacheResponse" to true:
- * 
- * 		jQuery.ajaxSetup({
- * 			cacheResponse: true,
- * 			cacheResponseTimer: 50000, //optional
- * 			cacheResponseValid: function() { ... } //optional
- * 		});
+ *   In order for the jQuery.get(...) and jQuery.post(...) methods to
+ *   use the Ajax cached response the default Ajax options need to be changed
+ *   to set the "cacheResponse" to true:
+ *
+ *   jQuery.ajaxSetup({
+ *      cacheResponse: true,
+ *      cacheResponseTimer: 50000, //optional
+ *      cacheResponseValid: function() { ... } //optional
+ *   });
  */
 
-;(function($) {
+(function($) {
 
 /**
  * The cacheFields provides a convenience for a mapping of the suffixes used when 
@@ -110,7 +110,7 @@ var getCreateCacheId = function(obj) {
 		}
 	}
 	return cacheId;
-}
+};
 
 /**
  * Private method to check if the cache item exists and is still valid.  Validity can be configured
@@ -140,7 +140,7 @@ var isCacheItemExistsAndValid = function(cacheId, options) {
 	}
 
 	return valid;
-}
+};
 
 /**
  * Use an ajaxPrefilter to modify the ajax settings object when the cacheResponse 
@@ -195,8 +195,8 @@ $.ajaxPrefilter(function(options, originalOptions, jqXhr) {
 					statusText: "success",
 					responseText: cachedItem.responseText,
 					responseXML: (cachedItem.hasResponseXML === true) ? $.parseXML(cachedItem.responseText) : undefined
-				}
-			}
+				};
+			};
 			jqXhr.responseFromCache = true;
 			jqXhr.cacheTimeRemaining = options.cacheTimeRemaining;
 		} else {

@@ -4,39 +4,39 @@
  * Copyright (c) 2010 Adam Ayres 
  * 
  * Licensed under the MIT license:
- * 		http://www.opensource.org/licenses/mit-license.php
+ *   http://www.opensource.org/licenses/mit-license.php
  * 
  * Project home:
- * 		http://github.com/adamayres/jqueryplugins/tree/master/request-storage
+ *   http://github.com/adamayres/jqueryplugins/tree/master/request-storage
  * 
  * Overview:
- * 		Provides a per request storage in memory.  Implements the HTML5 web storage interface.
- * 		See http://dev.w3.org/html5/webstorage/
+ *   Provides a per request storage in memory.  Implements the HTML5 web storage interface.
+ *   See http://dev.w3.org/html5/webstorage/
  * 
  * Usage:
- * 		Add item to storage:
+ *   Add item to storage:
+ *
+ *      requestStorage.setItem("keyName", "value");
  * 
- * 			requestStorage.setItem("keyName", "value");
+ *   Get item from storage:
+ *
+ *      requestStorage.getItem("keyName");
  * 
- * 		Get item from storage:
+ *   Remove item from storage:
  * 
- * 			requestStorage.getItem("keyName");
+ *      requestStorage.removeItem("keyName");
  * 
- * 		Remove item from storage:
+ *   Clear all items from storage:
  * 
- * 			requestStorage.removeItem("keyName");
+ *      requestStorage.clear();
  * 
- * 		Clear all items from storage:
+ *   Get storage size:
  * 
- * 			requestStorage.clear();
+ *      requestStorage.length();
  * 
- * 		Get storage size:
+ *   Get key from storage based on position:
  * 
- * 			requestStorage.length();
- * 
- * 		Get key from storage based on position:
- * 
- * 			requestStorage.key(1);
+ *      requestStorage.key(1);
  */
 
 var requestStorage = function() {
@@ -54,16 +54,16 @@ var requestStorage = function() {
 		setItem: function(key, value) {
 			if (!data.hasOwnProperty(key)) {		
 				this["length"]++;
-			}
+				dataKeyMap.push(key);
+			} 
 			data[key] = value;
-			dataKeyMap.push(key);
 		},
 		removeItem: function(key) {
 			if (data.hasOwnProperty(key)) {
 				this["length"]--;
 				for (var i = 0; i < dataKeyMap.length; i++) {
 					if (dataKeyMap[i] == key) {
-						dataKeyMap.splice[i, 1];
+						dataKeyMap.splice(i, 1);
 					}
 				}
 			}
@@ -73,5 +73,5 @@ var requestStorage = function() {
 			data = {};
 			dataKeyMap = [];
 		}
-	}
+	};
 }();
