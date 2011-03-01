@@ -27,6 +27,10 @@
 				<input type="Submit" id="get-submit"></input>
 			</fieldset>
 		</form>
+		<div class="links">
+			<a href="#" id="set-random-item">Set Random Item</a>
+			<a href="#" id="clear">Clear Storage</a>
+		</div>
 		<div class="log-container">
 			<h6>Log:</h6>
 			<textarea id="log"></textarea>
@@ -53,14 +57,19 @@
 			 * Remove Item
 			 */
 			$("#remove-form").submit(function() {
-				requestStorage.removeItem($("#remove-key").val());
-				logger.log("Remove", requestStorage);
+				var key = $("#remove-key").val();
+				var value = requestStorage.getItem(key);
+				requestStorage.removeItem(key);
+				logger.log("Remove", requestStorage, {
+					key: key,
+					value: value
+				});
 				logger.showStorage(requestStorage);
 				return false;
 			});
 			
 			/*
-			 * Remove Item
+			 * Get Item
 			 */
 			$("#get-form").submit(function() {
 				var key = $("#get-key").val();
@@ -68,6 +77,26 @@
 					key: key,
 					value: requestStorage.getItem($("#get-key").val())
 				});
+				logger.showStorage(requestStorage);
+				return false;
+			});
+			
+			/*
+			 * Set Random Item
+			 */
+			$("#set-random-item").click(function() {
+				requestStorage.setItem(createRandomWord(), createRandomWord());
+				logger.log("Set", requestStorage);
+				logger.showStorage(requestStorage);
+				return false;
+			});
+			
+			/*
+			 * Clear Storage
+			 */
+			$("#clear").click(function() {
+				requestStorage.clear();
+				logger.log("Clear", requestStorage);
 				logger.showStorage(requestStorage);
 				return false;
 			});

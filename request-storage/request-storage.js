@@ -46,7 +46,7 @@ var requestStorage = function() {
 	return {
 		length: 0,
 		key: function(n) {
-			return dataKeyMap.length >= n ? dataKeyMap[n-1] : null;
+			return (typeof n === "number" && dataKeyMap.length >= n && n > 0) ? dataKeyMap[n-1] : null;
 		},
 		getItem: function(key) {
 			return data.hasOwnProperty(key) ? data[key] : null;
@@ -72,6 +72,7 @@ var requestStorage = function() {
 		clear: function() {
 			data = {};
 			dataKeyMap = [];
+			this.length = 0;
 		}
 	};
 }();
