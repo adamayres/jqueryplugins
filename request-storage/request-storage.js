@@ -46,7 +46,7 @@ var requestStorage = function() {
 	return {
 		length: 0,
 		key: function(n) {
-			return (typeof n === "number" && dataKeyMap.length >= n && n > 0) ? dataKeyMap[n-1] : null;
+			return (typeof n === "number" && dataKeyMap.length >= n && n >= 0) ? dataKeyMap[n] : null;
 		},
 		getItem: function(key) {
 			return data.hasOwnProperty(key) ? data[key] : null;

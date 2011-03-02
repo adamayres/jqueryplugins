@@ -30,7 +30,7 @@ var logger = function() {
 			storageArea.val("");
 			var storage = $.ajaxCacheResponse.storage;
 			for (var i = 0; i < storage.length; i++) {
-				storageArea.val(storageArea.val() + "Key:\t" + storage.key(i+1) + "\nValue:\t" + storage.getItem(storage.key(i+1)) + "\n");
+				storageArea.val(storageArea.val() + "Key:\t" + storage.key(i) + "\nValue:\t" + storage.getItem(storage.key(i)) + "\n");
 				var j = 4;
 				while (j-->0) {
 					storageArea.val(storageArea.val() + "------------------------------");

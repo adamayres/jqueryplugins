@@ -126,12 +126,14 @@ var isCacheItemExistsAndValid = function(cacheId, options) {
 	
 	var valid = true;
 	
-	if (typeof options.cacheResponseTimer == "number") {
-		var cacheTime = $.ajaxCacheResponse.storage.getItem(cacheId + cacheFields.timeStamp);
-		var currentTime = new Date().getTime();
-		valid = cacheTime + options.cacheResponseTimer > currentTime;
-		if (valid === true) {
-			options.cacheTimeRemaining = options.cacheResponseTimer - (currentTime - cacheTime);
+	if (typeof options.cacheResponseTimer === "number") {
+		var cacheTime = parseInt($.ajaxCacheResponse.storage.getItem(cacheId + cacheFields.timeStamp));
+		if (typeof cacheTime === "number") {
+			var currentTime = new Date().getTime();
+			valid = cacheTime + options.cacheResponseTimer > currentTime;
+			if (valid === true) {
+				options.cacheTimeRemaining = options.cacheResponseTimer - (currentTime - cacheTime);
+			}
 		}
 	}
 	

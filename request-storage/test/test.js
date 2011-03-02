@@ -1,6 +1,6 @@
 module("Request Storage Test");
 			
-test("requestStorage.setItem() - simple add", function() {
+test("requestStorage.setItem() - set item", function() {
 	expect(1);
 	
 	requestStorage.setItem("foo", "bar");
@@ -12,7 +12,7 @@ test("requestStorage.setItem() - simple add", function() {
 	requestStorage.clear();
 });
 
-test("requestStorage.getItem() - simple get", function() {
+test("requestStorage.getItem() - get item", function() {
 	expect(1);
 	
 	requestStorage.setItem("foo", "bar");
@@ -24,7 +24,7 @@ test("requestStorage.getItem() - simple get", function() {
 	requestStorage.clear();
 });
 
-test("requestStorage.removeItem() - simple remove", function() {
+test("requestStorage.removeItem() - remove item", function() {
 	expect(1);
 	
 	requestStorage.setItem("foo", "bar");
@@ -90,12 +90,10 @@ test("requestStorage.key() - key", function() {
 	
 	requestStorage.setItem("foo", "bar");
 	
-	var key = requestStorage.key(1);
+	var key = requestStorage.key(0);
 	
 	strictEqual(key, "foo",
 			"Expected key was \"foo\", but was actually: [" + key + "]");
-			
-	key = requestStorage.key(0);
 	
 	var nullKeys = [-1, 2, "foo", true, false, {key: 1}, null, undefined, ""];
 	

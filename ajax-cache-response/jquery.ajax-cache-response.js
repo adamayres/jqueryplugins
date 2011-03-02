@@ -46,21 +46,21 @@ var requestStorage = function() {
 	return {
 		length: 0,
 		key: function(n) {
-			return dataKeyMap.length >= n ? dataKeyMap[n-1] : null;
+			return (typeof n === "number" && dataKeyMap.length >= n && n >= 0) ? dataKeyMap[n] : null;
 		},
 		getItem: function(key) {
 			return data.hasOwnProperty(key) ? data[key] : null;
 		},
 		setItem: function(key, value) {
 			if (!data.hasOwnProperty(key)) {		
-				this["length"]++;
+				this.length++;
 				dataKeyMap.push(key);
 			} 
 			data[key] = value;
 		},
 		removeItem: function(key) {
 			if (data.hasOwnProperty(key)) {
-				this["length"]--;
+				this.length--;
 				for (var i = 0; i < dataKeyMap.length; i++) {
 					if (dataKeyMap[i] == key) {
 						dataKeyMap.splice(i, 1);
@@ -72,6 +72,7 @@ var requestStorage = function() {
 		clear: function() {
 			data = {};
 			dataKeyMap = [];
+			this.length = 0;
 		}
 	};
 }();
@@ -203,12 +204,14 @@ var isCacheItemExistsAndValid = function(cacheId, options) {
 	
 	var valid = true;
 	
-	if (typeof options.cacheResponseTimer == "number") {
-		var cacheTime = $.ajaxCacheResponse.storage.getItem(cacheId + cacheFields.timeStamp);
-		var currentTime = new Date().getTime();
-		valid = cacheTime + options.cacheResponseTimer > currentTime;
-		if (valid === true) {
-			options.cacheTimeRemaining = options.cacheResponseTimer - (currentTime - cacheTime);
+	if (typeof options.cacheResponseTimer === "number") {
+		var cacheTime = parseInt($.ajaxCacheResponse.storage.getItem(cacheId + cacheFields.timeStamp));
+		if (typeof cacheTime === "number") {
+			var currentTime = new Date().getTime();
+			valid = cacheTime + options.cacheResponseTimer > currentTime;
+			if (valid === true) {
+				options.cacheTimeRemaining = options.cacheResponseTimer - (currentTime - cacheTime);
+			}
 		}
 	}
 	
