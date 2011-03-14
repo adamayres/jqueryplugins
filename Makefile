@@ -15,6 +15,10 @@ RS = request-storage
 RS_FILE = ${RS}/${RS}.js
 RS_MIN_FILE = ${RS}/${RS}.min.js
 
+SF = stack-fiddle
+SF_FILE = ${SF}/${SF}.js
+SF_MIN_FILE = ${SF}/${SF}.min.js
+
 define build_intro
 
 sed -e 's/@DATE/${DATE}/' \
@@ -48,5 +52,11 @@ rsmin:
 	
 rslint:
 	jslint ${RS_FILE}
+	
+sfmin:
+	$(call build_intro,Stack Fiddle,,${SF},${SF_FILE},${SF_MIN_FILE})
+	
+sflint:
+	jslint ${SF_FILE}
 	
 	
